@@ -14,21 +14,24 @@ Crafty.scene('menu' ,function () {
 
 Crafty.scene('pong' ,function () {
   var points = 0
-  var leftPaddle = Crafty.e('LeftPaddle ,2D ,DOM ,Color ,Multiway')
-                   .color('rgb(255,0,0)')
-                   .attr({ x: 20 ,y: 100 ,w: 10 ,h: 100 })
-                   .multiway(4 ,{ W: -90 ,S: 90 })
-  var rightPaddle = Crafty.e('RightPaddle ,2D ,DOM ,Color ,Multiway')
-                    .color('rgb(0,255,0)')
-                    .attr({ x: 580 ,y: 100 ,w: 10 ,h: 100 })
-                    .multiway(4 ,{ UP_ARROW: -90 ,DOWN_ARROW: 90 })
-
-  var leftPoints = Crafty.e('LeftPoints ,DOM ,2D ,Text')
-                   .attr({ x: 20 ,y: 20 ,w: 100 ,h: 20 ,points: 0 })
-                   .text('0 Points')
-  var rightPoints = Crafty.e('RightPoints ,DOM ,2D ,Text')
+  var leftPlayer =
+      { paddle: Crafty.e('LeftPaddle ,2D ,DOM ,Color ,Multiway')
+                .color('rgb(255,0,0)')
+                .attr({ x: 20 ,y: 100 ,w: 10 ,h: 100 })
+                .multiway(4 ,{ W: -90 ,S: 90 })
+      , scoreboard: Crafty.e('LeftPoints ,DOM ,2D ,Text')
+                    .attr({ x: 20 ,y: 20 ,w: 100 ,h: 20 ,points: 0 })
+                    .text('0 Points')
+      }
+  var rightPlayer =
+      { paddle: Crafty.e('RightPaddle ,2D ,DOM ,Color ,Multiway')
+                .color('rgb(0,255,0)')
+                .attr({ x: 580 ,y: 100 ,w: 10 ,h: 100 })
+                .multiway(4 ,{ UP_ARROW: -90 ,DOWN_ARROW: 90 })
+      , scoreboard: Crafty.e('RightPoints ,DOM ,2D ,Text')
                     .attr({ x: 515 ,y: 20 ,w: 100 ,h: 20 ,points: 0 })
                     .text('0 Points')
+      }
 
   var ball = Crafty.e('2D ,DOM ,Color ,Collision')
              .color('rgb(0,0,255)')
@@ -44,10 +47,10 @@ Crafty.scene('pong' ,function () {
 
                var scorer = null
                if (this.x > 600) {
-                 scorer = leftPoints
+                 scorer = leftPlayer
                }
                else if (this.x < 10) {
-                 scorer = rightPoints
+                 scorer = rightPlayer
                }
                if (scorer) {
                  points++
@@ -56,7 +59,7 @@ Crafty.scene('pong' ,function () {
                  this.dX = (Crafty.math.randomInt(0 ,1) == 0 ? -1 : 1)
                          * Crafty.math.randomInt(points+1 ,points+5)
                  this.dY = Crafty.math.randomInt(points+1 ,points+5)
-                 scorer.each(function () {
+                 scorer.scoreboard.each(function () {
                    this.text(++this.points + ' Points')
                    if (this.points > maxScore) Crafty.scene('gameover')
                  })
