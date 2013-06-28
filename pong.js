@@ -23,6 +23,13 @@ Crafty.scene('pong' ,function () {
                     .attr({ x: 580 ,y: 100 ,w: 10 ,h: 100 })
                     .multiway(4 ,{ UP_ARROW: -90 ,DOWN_ARROW: 90 })
 
+  var leftPoints = Crafty.e('LeftPoints ,DOM ,2D ,Text')
+                   .attr({ x: 20 ,y: 20 ,w: 100 ,h: 20 ,points: 0 })
+                   .text('0 Points')
+  var rightPoints = Crafty.e('RightPoints ,DOM ,2D ,Text')
+                    .attr({ x: 515 ,y: 20 ,w: 100 ,h: 20 ,points: 0 })
+                    .text('0 Points')
+
   var ball = Crafty.e('2D ,DOM ,Color ,Collision')
              .color('rgb(0,0,255)')
              .attr( { x: 300 ,y: 150 ,w: 10 ,h: 10
@@ -65,12 +72,6 @@ Crafty.scene('pong' ,function () {
                if (this.dX > 0) this.dX *= -1
              })
 
-  var leftPoints = Crafty.e('LeftPoints ,DOM ,2D ,Text')
-                   .attr({ x: 20 ,y: 20 ,w: 100 ,h: 20 ,points: 0 })
-                   .text('0 Points')
-  var rightPoints = Crafty.e('RightPoints ,DOM ,2D ,Text')
-                    .attr({ x: 515 ,y: 20 ,w: 100 ,h: 20 ,points: 0 })
-                    .text('0 Points')
 })
 
 Crafty.scene('gameover' ,function () {
