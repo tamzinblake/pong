@@ -32,13 +32,13 @@ var ball = Crafty.e("2D ,DOM ,Color ,Collision")
              }
              if (this.x > 600) {
                resetBall(this)
-               Crafty("LeftPoints").each(function () {
+               leftPoints.each(function () {
                  this.text(++this.points + " Points")
                })
              }
              if (this.x < 10) {
                resetBall(this)
-               Crafty("RightPoints").each(function () {
+               rightPoints.each(function () {
                  this.text(++this.points + " Points")
                })
              }
@@ -50,9 +50,9 @@ var ball = Crafty.e("2D ,DOM ,Color ,Collision")
              this.dX *= -1
            })
 
-var leftScoreboard = Crafty.e("LeftPoints ,DOM ,2D ,Text")
-                     .attr({ x: 20 ,y: 20 ,w: 100 ,h: 20 ,points: 0 })
-                     .text("0 Points")
-var rightScoreboard = Crafty.e("RightPoints ,DOM ,2D ,Text")
-                      .attr({ x: 515 ,y: 20 ,w: 100 ,h: 20 ,points: 0 })
-                      .text("0 Points")
+var leftPoints = Crafty.e("LeftPoints ,DOM ,2D ,Text")
+                 .attr({ x: 20 ,y: 20 ,w: 100 ,h: 20 ,points: 0 })
+                 .text("0 Points")
+var rightPoints = Crafty.e("RightPoints ,DOM ,2D ,Text")
+                  .attr({ x: 515 ,y: 20 ,w: 100 ,h: 20 ,points: 0 })
+                  .text("0 Points")
