@@ -3,11 +3,11 @@
 Crafty.init(600 ,300)
 Crafty.background('rgb(127,127,127)')
 
-var leftPaddle = Crafty.e('Paddle ,2D ,DOM ,Color ,Multiway')
+var leftPaddle = Crafty.e('LeftPaddle ,2D ,DOM ,Color ,Multiway')
                  .color('rgb(255,0,0)')
                  .attr({ x: 20 ,y: 100 ,w: 10 ,h: 100 })
                  .multiway(4 ,{ W: -90 ,S: 90 })
-var rightPaddle = Crafty.e('Paddle ,2D ,DOM ,Color ,Multiway')
+var rightPaddle = Crafty.e('RightPaddle ,2D ,DOM ,Color ,Multiway')
                   .color('rgb(0,255,0)')
                   .attr({ x: 580 ,y: 100 ,w: 10 ,h: 100 })
                   .multiway(4 ,{ UP_ARROW: -90 ,DOWN_ARROW: 90 })
@@ -46,8 +46,11 @@ var ball = Crafty.e('2D ,DOM ,Color ,Collision')
              this.x += this.dX
              this.y += this.dY
            })
-           .onHit('Paddle' ,function () {
-             this.dX *= -1
+           .onHit('LeftPaddle' ,function () {
+             if (this.dX < 0) this.dX *= -1
+           })
+           .onHit('RightPaddle' ,function () {
+             if (this.dX > 0) this.dX *= -1
            })
 
 var leftPoints = Crafty.e('LeftPoints ,DOM ,2D ,Text')
