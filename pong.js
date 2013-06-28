@@ -34,25 +34,22 @@ Crafty.scene('pong' ,function () {
                if (this.y <= 0 || this.y >= 290) {
                  this.dY *= -1
                }
-               function resetBall (ball) {
-                 ball.x = 300
-                 ball.y = 150
-                 ball.dX = (Crafty.math.randomInt(0 ,1) == 0 ? -1 : 1)
-                         * Crafty.math.randomInt(points+1 ,points+5)
-                 ball.dY = Crafty.math.randomInt(points+1 ,points+5)
-               }
+
+               var scorer = null
                if (this.x > 600) {
-                 points++
-                 resetBall(this)
-                 leftPoints.each(function () {
-                   this.text(++this.points + ' Points')
-                   if (this.points > maxScore) Crafty.scene('gameover')
-                 })
+                 scorer = leftPoints
                }
-               if (this.x < 10) {
+               else if (this.x < 10) {
+                 scorer = rightPoints
+               }
+               if (scorer) {
                  points++
-                 resetBall(this)
-                 rightPoints.each(function () {
+                 this.x = 300
+                 this.y = 150
+                 this.dX = (Crafty.math.randomInt(0 ,1) == 0 ? -1 : 1)
+                         * Crafty.math.randomInt(points+1 ,points+5)
+                 this.dY = Crafty.math.randomInt(points+1 ,points+5)
+                 scorer.each(function () {
                    this.text(++this.points + ' Points')
                    if (this.points > maxScore) Crafty.scene('gameover')
                  })
