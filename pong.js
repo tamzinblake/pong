@@ -13,6 +13,7 @@ Crafty.scene('menu' ,function () {
 })
 
 Crafty.scene('pong' ,function () {
+  var points = 0
   var leftPaddle = Crafty.e('LeftPaddle ,2D ,DOM ,Color ,Multiway')
                    .color('rgb(255,0,0)')
                    .attr({ x: 20 ,y: 100 ,w: 10 ,h: 100 })
@@ -37,10 +38,11 @@ Crafty.scene('pong' ,function () {
                  ball.x = 300
                  ball.y = 150
                  ball.dX = (Crafty.math.randomInt(0 ,1) == 0 ? -1 : 1)
-                         * Crafty.math.randomInt(2 ,5)
-                 ball.dY = Crafty.math.randomInt(2 ,5)
+                         * Crafty.math.randomInt(points+1 ,points+5)
+                 ball.dY = Crafty.math.randomInt(points+1 ,points+5)
                }
                if (this.x > 600) {
+                 points++
                  resetBall(this)
                  leftPoints.each(function () {
                    this.text(++this.points + ' Points')
@@ -48,6 +50,7 @@ Crafty.scene('pong' ,function () {
                  })
                }
                if (this.x < 10) {
+                 points++
                  resetBall(this)
                  rightPoints.each(function () {
                    this.text(++this.points + ' Points')
