@@ -1,6 +1,7 @@
 /* global Crafty */
 /* Based on the pong example from the Crafty website */
 var maxScore = 5
+  , winner = null
 Crafty.init(600 ,300)
 Crafty.background('rgb(127,127,127)')
 Crafty.scene('menu' ,function () {
@@ -22,6 +23,7 @@ Crafty.scene('pong' ,function () {
       , scoreboard: Crafty.e('LeftPoints ,DOM ,2D ,Text')
                     .attr({ x: 20 ,y: 20 ,w: 100 ,h: 20 ,points: 0 })
                     .text('0 Points')
+      , name: 'Left player'
       }
   var rightPlayer =
       { paddle: Crafty.e('RightPaddle ,2D ,DOM ,Color ,Multiway')
@@ -31,6 +33,7 @@ Crafty.scene('pong' ,function () {
       , scoreboard: Crafty.e('RightPoints ,DOM ,2D ,Text')
                     .attr({ x: 515 ,y: 20 ,w: 100 ,h: 20 ,points: 0 })
                     .text('0 Points')
+      , name: 'Right player'
       }
 
   var ball = Crafty.e('2D ,DOM ,Color ,Collision')
@@ -61,7 +64,10 @@ Crafty.scene('pong' ,function () {
                  this.dY = Crafty.math.randomInt(points+1 ,points+5)
                  scorer.scoreboard.each(function () {
                    this.text(++this.points + ' Points')
-                   if (this.points > maxScore) Crafty.scene('gameover')
+                   if (this.points > maxScore) {
+                     winner = scorer
+                     Crafty.scene('gameover')
+                   }
                  })
                }
 
@@ -80,7 +86,7 @@ Crafty.scene('pong' ,function () {
 Crafty.scene('gameover' ,function () {
   Crafty.e('DOM ,2D ,Text')
   .attr({ x: 200 ,y: 150 ,w: 100 ,h: 20 ,time: 600})
-  .text('Game over')
+  .text('Game over - ' + winner.name + ' wins!')
   .bind('EnterFrame' ,function () {
     this.time--
     if (this.time <= 0) Crafty.scene('menu')
